@@ -62,4 +62,49 @@ public class Ordenador {
 
         this.tempoNano = System.nanoTime() - inicio;
     }
+
+    public void insertionSort(Tripulante[] vetor, boolean passoAPasso) {
+        zerarContadores();
+        int n = vetor.length;
+        long inicio = System.nanoTime();
+
+        for (int i = 1; i < n; i++) {
+            Tripulante emPe = vetor[i];
+            int j = i - 1;
+
+            if (passoAPasso) {
+                System.out.println("\n★ Insertion Sort · vez de " + emPe.getNome() + " (" + emPe.getCodigo() + ")");
+            }
+
+            while (j >= 0) {
+                comparacoes++;
+
+                if (vetor[j].getCodigo() > emPe.getCodigo()) {
+                    if (passoAPasso) {
+                        System.out.println("  " + vetor[j].getNome() + " (" + vetor[j].getCodigo() + ") > "
+                                + emPe.getNome() + " (" + emPe.getCodigo() + ")? SIM -> "
+                                + vetor[j].getNome() + " escorrega para a direita!");
+                    }
+
+                    vetor[j + 1] = vetor[j];
+                    trocas++;
+                    j--;
+                } else {
+                    if (passoAPasso) {
+                        System.out.println("  " + vetor[j].getNome() + " (" + vetor[j].getCodigo() + ") > "
+                                + emPe.getNome() + " (" + emPe.getCodigo() + ")? NÃO -> achou a vaga!");
+                    }
+                    break;
+                }
+            }
+
+            vetor[j + 1] = emPe;
+            if (passoAPasso) {
+                System.out.println("  -> " + emPe.getNome() + " sentou na cadeira " + (j + 1)
+                        + " | comparações: " + comparacoes + " | deslocamentos: " + trocas);
+            }
+        }
+
+        this.tempoNano = System.nanoTime() - inicio;
+    }
 }
