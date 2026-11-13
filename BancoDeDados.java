@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Random;
 import java.util.Scanner;
 
 public class BancoDeDados {
@@ -82,4 +83,38 @@ public class BancoDeDados {
         }
     }
 
+    public static Tripulante[] gerarTripulantesCorrida(int n, int situacao) {
+        Tripulante[] fila = new Tripulante[n];
+        Random sorteador = new Random(42);
+
+        String[] nomes = {"Zibo Zumbido", "Quark Quarkinho", "Lumi Lunar", "Gloop Gelatina", "Cometa Clotilde"};
+        String[] planetas = {"Marte", "Júpiter", "Plutão", "Vênus", "Saturno"};
+        String[] funcoes = {"Piloto", "Engenheiro", "Navegadora", "Cozinheiro", "Cientista"};
+
+        for (int i = 0; i < n; i++) {
+            int codigo;
+            if (situacao == 3) {
+                codigo = 90000000 - i;
+            } else {
+                codigo = 10000000 + i;
+            }
+
+            String nome = nomes[sorteador.nextInt(5)];
+            String planeta = planetas[sorteador.nextInt(5)];
+            String funcao = funcoes[sorteador.nextInt(5)];
+
+            fila[i] = new Tripulante(codigo, nome, planeta, funcao);
+        }
+
+        if (situacao == 1) {
+            for (int i = 0; i < n; i++) {
+                int cadeiraSorteada = sorteador.nextInt(n);
+                Tripulante temp = fila[i];
+                fila[i] = fila[cadeiraSorteada];
+                fila[cadeiraSorteada] = temp;
+            }
+        }
+
+        return fila;
+    }
 }
